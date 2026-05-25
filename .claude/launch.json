@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Cadence HTML",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", ".", "--listen", "3000", "--no-clipboard"],
+      "port": 3000
+    },
+    {
+      "name": "Cadence Vite",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "uploads/ai-social-media-calendar-design"],
+      "port": 5173
+    }
+  ]
+}

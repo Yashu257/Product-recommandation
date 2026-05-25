@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadence — AI-Powered Social Media Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --violet-500: #6C3DE8;
+      --violet-600: #5B2FD9;
+      --violet-50: #F5F3FF;
+      --accent: #8B5CF6;
+      --bg: #FAFAFC;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text-strong: #111827;
+      --text-default: #374151;
+      --text-muted: #6B7280;
+      --text-subtle: #9CA3AF;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-default);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(to right, rgba(229, 231, 235, 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(229, 231, 235, 0.3) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    /* Navbar */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.8);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+    }
+    
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-strong);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--violet-500), var(--accent));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 18px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    
+    .nav-links a:hover {
+      color: var(--text-strong);
+      background: rgba(108, 61, 232, 0.04);
+    }
+    
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    
+    .btn-primary {
+      background: var(--violet-500);
+      color: white;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-primary:hover {
+      background: var(--violet-600);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(108, 61, 232, 0.3);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-default);
+      border: 1px solid var(--border);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--surface);
+      border-color: var(--text-subtle);
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+    }
+    
+    .btn-ghost:hover {
+      color: var(--text-strong);
+    }
+    
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Hero */
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .hero h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 72px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      color: var(--text-strong);
+      margin-bottom: 24px;
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero p {
+      font-size: 20px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 40px;
+      line-height: 1.5;
+    }
+    
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    
+    .hero-actions .btn {
+      height: 52px;
+      padding: 0 28px;
+      font-size: 16px;
+    }
+    
+    .trust-badges {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: var(--text-subtle);
+    }
+    
+    .trust-badges span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .trust-badges span::before {
+      content: '✓';
+      color: #10B981;
+      font-weight: 700;
+    }
+    
+    /* Hero mockup */
+    .hero-mockup {
+      margin: 80px auto 0;
+      max-width: 1120px;
+      position: relative;
+    }
+    
+    .mockup-frame {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 
+        0 20px 60px -12px rgba(17, 24, 39, 0.08),
+        0 8px 24px -8px rgba(17, 24, 39, 0.04);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .mockup-chrome {
+      height: 48px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 8px;
+    }
+    
+    .chrome-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #E5E7EB;
+    }
+    
+    .mockup-content {
+      padding: 32px;
+      background: #FAFAFC;
+    }
+    
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+    }
+    
+    .mock-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    
+    .mock-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-subtle);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    
+    .mock-platforms {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .mock-platform {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    
+    .mock-textarea {
+      width: 100%;
+      height: 140px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 14px;
+      color: var(--text-default);
+      margin-bottom: 12px;
+      background: white;
+    }
+    
+    .mock-ai-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: linear-gradient(135deg, var(--violet-500), var(--accent));
+      color: white;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    
+    .mock-preview {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      height: 200px;
+    }
+    
+    .mock-preview-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    
+    .mock-post {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .mock-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #E5E7EB, #D1D5DB);
+    }
+    
+    .mock-post-content {
+      flex: 1;
+    }
+    
+    .mock-post-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-strong);
+      margin-bottom: 6px;
+    }
+    
+    .mock-post-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    
+    /* Floating icons */
+    .floating-icon {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: white;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(17, 24, 39, 0.08);
+      display: grid;
+      place-items: center;
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.8;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .floating-icon:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+    .floating-icon:nth-child(2) { top: 20%; right: 8%; animation-delay: 1s; }
+    .floating-icon:nth-child(3) { top: 50%; left: 2%; animation-delay: 2s; }
+    .floating-icon:nth-child(4) { top: 60%; right: 4%; animation-delay: 3s; }
+    
+    /* Features */
+    .features {
+      padding: 120px 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    
+    .section-header h2 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-strong);
+      margin-bottom: 16px;
+    }
+    
+    .section-header p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    
+    .feature-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(17, 24, 39, 0.08);
+    }
+    
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--violet-50), #FBF9FF);
+      border: 1px solid rgba(108, 61, 232, 0.1);
+      display: grid;
+      place-items: center;
+      color: var(--violet-500);
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    .feature-card h3 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-strong);
+      margin-bottom: 12px;
+    }
+    
+    .feature-card p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    
+    .feature-list {
+      list-style: none;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    
+    .feature-list li {
+      padding: 6px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+    
+    .feature-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #10B981;
+      font-weight: 700;
+    }
+    
+    /* Stats */
+    .stats {
+      padding: 120px 0;
+      background: white;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--text-strong);
+      margin-bottom: 8px;
+    }
+    
+    .stat-label {
+      font-size: 16px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    
+    /* AI Section */
+    .ai-section {
+      padding: 120px 0;
+    }
+    
+    .ai-mockup {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px -12px rgba(17, 24, 39, 0.08);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      height: 600px;
+    }
+    
+    .ai-sidebar {
+      background: #FAFAFC;
+      border-right: 1px solid var(--border);
+      padding: 24px;
+    }
+    
+    .ai-sidebar-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-subtle);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    
+    .ai-conv {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--text-default);
+    }
+    
+    .ai-main {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .ai-main h3 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-strong);
+      margin-bottom: 16px;
+    }
+    
+    .ai-main p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 32px;
+    }
+    
+    .ai-prompts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 600px;
+    }
+    
+    .ai-prompt {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: left;
+      font-size: 14px;
+      color: var(--text-default);
+      transition: all 0.2s;
+    }
+    
+    .ai-prompt:hover {
+      border-color: var(--violet-500);
+      box-shadow: 0 0 0 3px rgba(108, 61, 232, 0.08);
+    }
+    
+    /* Final CTA */
+    .final-cta {
+      padding: 120px 0;
+      text-align: center;
+    }
+    
+    .cta-box {
+      background: linear-gradient(135deg, var(--violet-500), var(--accent));
+      border-radius: 24px;
+      padding: 80px 40px;
+      color: white;
+    }
+    
+    .cta-box h2 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      margin-bottom: 24px;
+    }
+    
+    .cta-box p {
+      font-size: 18px;
+      opacity: 0.9;
+      margin-bottom: 32px;
+    }
+    
+    .cta-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    
+    .btn-white {
+      background: white;
+      color: var(--violet-600);
+    }
+    
+    .btn-white:hover {
+      background: rgba(255, 255, 255, 0.95);
+    }
+    
+    .btn-outline-white {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .btn-outline-white:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: white;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      background: white;
+    }
+    
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .footer-left {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--text-strong);
+    }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 48px; }
+      .nav-links, .mockup-grid { display: none; }
+      .feature-grid, .stats-grid, .ai-prompts { grid-template-columns: 1fr; }
+      .ai-mockup { grid-template-columns: 1fr; height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating platform icons -->
+  <div class="floating-icon" style="font-size: 20px;">📸</div>
+  <div class="floating-icon" style="font-size: 20px;">🐦</div>
+  <div class="floating-icon" style="font-size: 20px;">💼</div>
+  <div class="floating-icon" style="font-size: 20px;">📘</div>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">✦</div>
+        Cadence
+      </a>
+      
+      <ul class="nav-links">
+        <li><a href="#features">Product</a></li>
+        <li><a href="#ai">Solutions</a></li>
+        <li><a href="#stats">Resources</a></li>
+        <li><a href="#cta">Pricing</a></li>
+      </ul>
+      
+      <div class="nav-actions">
+        <a href="Cadence.html" class="btn btn-ghost">Sign In</a>
+        <a href="#cta" class="btn btn-secondary">Book Demo</a>
+        <a href="Cadence.html" class="btn btn-primary">Start Free Trial</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Manage Social Media<br/>with AI-Powered Precision</h1>
+      <p>Create, schedule, publish, analyze and optimize content across all platforms from one intelligent workspace.</p>
+      
+      <div class="hero-actions">
+        <a href="Cadence.html" class="btn btn-primary">Start Free Trial</a>
+        <a href="#cta" class="btn btn-secondary">Book Demo</a>
+      </div>
+      
+      <div class="trust-badges">
+        <span>No credit card required</span>
+        <span>AI Powered</span>
+        <span>Multi Platform Publishing</span>
+        <span>Analytics Included</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero mockup -->
+  <section class="hero-mockup">
+    <div class="container">
+      <div class="mockup-frame">
+        <div class="mockup-chrome">
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+        </div>
+        <div class="mockup-content">
+          <div class="mockup-grid">
+            <div class="mock-card">
+              <div class="mock-label">Publishing to</div>
+              <div class="mock-platforms">
+                <div class="mock-platform"></div>
+                <div class="mock-platform"></div>
+                <div class="mock-platform"></div>
+                <div class="mock-platform"></div>
+              </div>
+              <div class="mock-label">Compose</div>
+              <div class="mock-textarea"></div>
+              <div class="mock-ai-btn">✨ AI Co-Writer</div>
+            </div>
+            <div>
+              <div class="mock-preview">
+                <div class="mock-preview-label">Live Preview</div>
+                <div class="mock-post">
+                  <div class="mock-avatar"></div>
+                  <div class="mock-post-content">
+                    <div class="mock-post-name">Your Brand</div>
+                    <div class="mock-post-text">🚀 Excited to announce our new AI-powered features...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Everything you need to scale</h2>
+        <p>Powerful features designed for modern content teams who need to move fast.</p>
+      </div>
+      
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">✨</div>
+          <h3>AI Content Creation</h3>
+          <p>Let AI handle the heavy lifting. Generate captions, hashtags, and ideas instantly.</p>
+          <ul class="feature-list">
+            <li>Generate captions</li>
+            <li>Smart hashtags</li>
+            <li>Content ideas</li>
+            <li>Rewrites & optimization</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Multi-Platform Publishing</h3>
+          <p>Write once, publish everywhere. Schedule to all platforms from a single workspace.</p>
+          <ul class="feature-list">
+            <li>Instagram</li>
+            <li>LinkedIn</li>
+            <li>X (Twitter)</li>
+            <li>Facebook</li>
+            <li>TikTok</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Advanced Analytics</h3>
+          <p>Track what matters. Get insights that help you grow faster and smarter.</p>
+          <ul class="feature-list">
+            <li>Reach tracking</li>
+            <li>Engagement metrics</li>
+            <li>Growth analytics</li>
+            <li>Performance reports</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div>
+          <div class="stat-value">1,000+</div>
+          <div class="stat-label">Teams</div>
+        </div>
+        <div>
+          <div class="stat-value">50K+</div>
+          <div class="stat-label">Posts Scheduled</div>
+        </div>
+        <div>
+          <div class="stat-value">10M+</div>
+          <div class="stat-label">Reach Generated</div>
+        </div>
+        <div>
+          <div class="stat-value">99.9%</div>
+          <div class="stat-label">Platform Uptime</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Section -->
+  <section class="ai-section" id="ai">
+    <div class="container">
+      <div class="section-header">
+        <h2>AI that understands your voice</h2>
+        <p>Train Cadence AI on your brand voice and let it write content that sounds like you.</p>
+      </div>
+      
+      <div class="ai-mockup">
+        <div class="ai-sidebar">
+          <div class="ai-sidebar-title">Recent</div>
+          <div class="ai-conv">Product launch ideas</div>
+          <div class="ai-conv">Rewrite with more energy</div>
+          <div class="ai-conv">LinkedIn thought leadership</div>
+          <div class="ai-conv">Instagram caption hooks</div>
+        </div>
+        <div class="ai-main">
+          <h3>What would you like to create?</h3>
+          <p>Ask AI to write, rewrite, or brainstorm content that matches your brand voice.</p>
+          <div class="ai-prompts">
+            <div class="ai-prompt">✨ Generate a post about our new product launch</div>
+            <div class="ai-prompt">💡 Content ideas for next week's schedule</div>
+            <div class="ai-prompt">#️⃣ Trending hashtags for tech & SaaS</div>
+            <div class="ai-prompt">📈 Boost engagement with hooks & CTAs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta" id="cta">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Start Managing Social Media Smarter</h2>
+        <p>Join thousands of teams already using Cadence to scale their content.</p>
+        <div class="cta-actions">
+          <a href="Cadence.html" class="btn btn-white btn-lg">Start Free Trial</a>
+          <a href="#" class="btn btn-outline-white btn-lg">Book Demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          © 2026 Cadence. All rights reserved.
+        </div>
+        <ul class="footer-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

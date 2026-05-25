@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(not exist *)",
+      "Bash(mkdir -p \"/mnt/c/Users/neera/Downloads/Social Media/.claude\")",
+      "mcp__Claude_Preview__preview_start",
+      "PowerShell(git -C \"C:\\\\Users\\\\neera\\\\Downloads\\\\Social Media\" init 2>&1)"
+    ]
+  }
+}
