@@ -1,6 +1,7 @@
 {
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "framework": "nextjs"
+  "buildCommand": "cd glovista-ai && npm run build",
+  "devCommand": "cd glovista-ai && npm run dev",
+  "installCommand": "cd glovista-ai && npm install",
+  "framework": "nextjs",
+  "outputDirectory": "glovista-ai/.next"
 }
