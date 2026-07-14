@@ -70,3 +70,27 @@ lib/
 Skin Barrier Kit, pigmentation → KoziGleam, men + oily → Core Man Kit, plus wellness
 concerns like hair fall, gut, bone, energy). It is budget-aware, builds three routines,
 returns ingredient reasons, and computes a confidence score. Fully client-side.
+
+## Deploy to Vercel
+
+### Option 1: Deploy via Vercel Dashboard
+
+1. Go to [vercel.com](https://vercel.com) and sign in with your GitHub account
+2. Click "Add New Project"
+3. Import your repository: `Yashu257/AI-Product-Recommandation`
+4. Vercel will auto-detect Next.js settings
+5. Click "Deploy"
+
+### Option 2: Deploy via Vercel CLI
+
+```bash
+npm i -g vercel
+vercel login
+vercel --prod
+```
+
+Your app will be live at a Vercel URL within minutes!
+
+### Environment Variables
+
+No environment variables are required for this demo. All AI logic runs client-side.
