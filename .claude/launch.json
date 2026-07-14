@@ -13,5 +13,103 @@
       "runtimeArgs": ["run", "dev", "--prefix", "uploads/ai-social-media-calendar-design"],
       "port": 5173
     }
+  ,{
+      "name": "CiploStem Vite",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "C:\\Users\\neera\\Downloads\\Social Media\\start-ciplostem.bat"],
+      "port": 5175
+    }
+  ,{
+      "name": "COACT AI Website",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "C:\\Users\\neera\\Downloads\\premium-enterprise-ai-website-extracted\\premium-enterprise-ai-website"],
+      "port": 5174,
+      "autoPort": false
+    }
+  ,{
+      "name": "Scale Clone",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "C:\\Users\\neera\\Downloads\\scale-clone-extracted\\premium-enterprise-ai-website", "--", "--port", "5176"],
+      "port": 5176
+    }
+  ,{
+      "name": "GET-IN Landing",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "C:\\Users\\neera\\Downloads\\Social Media\\start-getin.bat"],
+      "port": 3001
+    }
+  ,{
+      "name": "AI Games Platform",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "C:\\Users\\neera\\Downloads\\Social Media\\start-aigames.bat"],
+      "port": 5177
+    }
+  ,{
+      "name": "CortexIQ",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "D:\\cortexiq", "--", "--port", "3020"],
+      "port": 3020
+    }
+  ,{
+      "name": "Outreach Frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "D:\\ai-sales-outreach-agent\\frontend", "--", "--port", "5178"],
+      "port": 5178
+    }
+  ,{
+      "name": "AgentForge Frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "D:\\agentforge\\frontend", "--", "--port", "3010"],
+      "port": 3010
+    }
+  ,{
+      "name": "Cube of Joy",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "C:\\Users\\neera\\Downloads\\cube-of-joy-main\\cube-of-joy-main\\cube-of-joy-main", "--", "--port", "3030"],
+      "port": 3030
+    }
+  ,{
+      "name": "Respongo Elite",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "C:\\Users\\neera\\Downloads\\Social Media\\start-respongo.bat"],
+      "port": 8080,
+      "autoPort": false
+    }
+  ,{
+      "name": "Nova Login (PHP)",
+      "runtimeExecutable": "C:\\xampp\\php\\php.exe",
+      "runtimeArgs": ["-S", "127.0.0.1:8971", "-t", "C:\\Users\\neera\\Downloads\\Social Media\\login-page"],
+      "port": 8971
+    }
+  ,{
+      "name": "PharmaWebcast Preview",
+      "runtimeExecutable": "C:\\xampp\\php\\php.exe",
+      "runtimeArgs": ["-S", "127.0.0.1:8972", "-t", "D:\\buyyer\\pharma-webcast\\public"],
+      "port": 8972
+    }
+  ,{
+      "name": "PharmaWebcast Real Backend",
+      "runtimeExecutable": "C:\\php83\\php.exe",
+      "runtimeArgs": ["-c", "C:\\php83\\php.ini", "-S", "127.0.0.1:8973", "-t", "D:\\buyyer\\pharma-webcast\\public"],
+      "port": 8973
+    }
+  ,{
+      "name": "3D Models - Text Flipping Board",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "C:\\Users\\neera\\Downloads\\Social Media\\start-textflipboard.bat"],
+      "port": 3040
+    }
+  ,{
+      "name": "3D Models - Parallax Hero Images",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "C:\\Users\\neera\\Downloads\\Social Media\\start-parallaxhero.bat"],
+      "port": 3041
+    }
+  ,{
+      "name": "Glovista AI Dermatologist",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "C:\\Users\\neera\\Downloads\\Social Media\\start-glovista.bat"],
+      "port": 3050
+    }
   ]
 }

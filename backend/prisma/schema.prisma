@@ -1,0 +1,393 @@
+// Cadence — Prisma Schema
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────
+
+enum Platform {
+  TWITTER
+  FACEBOOK
+  INSTAGRAM
+  LINKEDIN
+}
+
+enum PostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHING
+  PUBLISHED
+  FAILED
+}
+
+enum WorkspaceMemberRole {
+  OWNER
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  REVOKED
+}
+
+enum AITone {
+  PROFESSIONAL
+  CASUAL
+  BOLD
+  WITTY
+  STORYTELLER
+  CONVERSATIONAL
+}
+
+enum AIModel {
+  CADENCE_4
+  CADENCE_4_PRO
+  GPT_4O
+}
+
+enum ActivityType {
+  POST_CREATED
+  POST_UPDATED
+  POST_DELETED
+  POST_SCHEDULED
+  POST_PUBLISHED
+  POST_FAILED
+  POST_DUPLICATED
+  AI_GENERATED
+  MEMBER_INVITED
+  MEMBER_JOINED
+  MEMBER_REMOVED
+  CHANNEL_CONNECTED
+  CHANNEL_DISCONNECTED
+}
+
+enum SubscriptionPlan {
+  FREE
+  PRO
+  TEAM
+  ENTERPRISE
+}
+
+// ─────────────────────────────────────────────────────────────
+// User
+// ─────────────────────────────────────────────────────────────
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  passwordHash   String
+  name           String
+  handle         String?  @unique
+  avatarUrl      String?
+  bio            String?
+  timezone       String   @default("UTC")
+  language       String   @default("en")
+  emailVerified  Boolean  @default(false)
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  refreshTokens     RefreshToken[]
+  workspaceMembers  WorkspaceMember[]
+  posts             Post[]
+  aiConversations   AIConversation[]
+  activityLogs      ActivityLog[]
+  sentInvites       WorkspaceInvite[]  @relation("InviteSender")
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Auth
+// ─────────────────────────────────────────────────────────────
+
+model RefreshToken {
+  id          String   @id @default(cuid())
+  token       String   @unique
+  userId      String
+  expiresAt   DateTime
+  revokedAt   DateTime?
+  createdAt   DateTime @default(now())
+  userAgent   String?
+  ipAddress   String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Workspace
+// ─────────────────────────────────────────────────────────────
+
+model Workspace {
+  id          String           @id @default(cuid())
+  name        String
+  slug        String           @unique
+  logoUrl     String?
+  timezone    String           @default("UTC")
+  plan        SubscriptionPlan @default(FREE)
+  aiCredits   Int              @default(1000)
+  aiCreditsResetAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relations
+  members         WorkspaceMember[]
+  invites         WorkspaceInvite[]
+  posts           Post[]
+  socialAccounts  SocialAccount[]
+  brandVoice      BrandVoice?
+  activityLogs    ActivityLog[]
+  aiConversations AIConversation[]
+
+  @@map("workspaces")
+}
+
+model WorkspaceMember {
+  id          String              @id @default(cuid())
+  workspaceId String
+  userId      String
+  role        WorkspaceMemberRole @default(VIEWER)
+  joinedAt    DateTime            @default(now())
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([workspaceId])
+  @@index([userId])
+  @@map("workspace_members")
+}
+
+model WorkspaceInvite {
+  id          String       @id @default(cuid())
+  workspaceId String
+  email       String
+  role        WorkspaceMemberRole @default(EDITOR)
+  token       String       @unique @default(cuid())
+  status      InviteStatus @default(PENDING)
+  expiresAt   DateTime
+  sentById    String
+  createdAt   DateTime     @default(now())
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  sentBy    User      @relation("InviteSender", fields: [sentById], references: [id])
+
+  @@index([workspaceId])
+  @@index([token])
+  @@map("workspace_invites")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Social Accounts (Connected Channels)
+// ─────────────────────────────────────────────────────────────
+
+model SocialAccount {
+  id              String   @id @default(cuid())
+  workspaceId     String
+  platform        Platform
+  handle          String
+  displayName     String?
+  profileImageUrl String?
+  accessToken     String?  // encrypted at application layer
+  refreshToken    String?  // encrypted at application layer
+  tokenExpiresAt  DateTime?
+  followersCount  Int      @default(0)
+  isActive        Boolean  @default(true)
+  lastSyncedAt    DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  workspace    Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  postTargets  PostTarget[]
+
+  @@unique([workspaceId, platform, handle])
+  @@index([workspaceId])
+  @@map("social_accounts")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Posts
+// ─────────────────────────────────────────────────────────────
+
+model Post {
+  id           String     @id @default(cuid())
+  workspaceId  String
+  authorId     String
+  title        String
+  content      String
+  hashtags     String[]   @default([])
+  status       PostStatus @default(DRAFT)
+  scheduledAt  DateTime?
+  publishedAt  DateTime?
+  failureReason String?
+  isAIGenerated Boolean   @default(false)
+  aiPrompt     String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  // Relations
+  workspace   Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  author      User         @relation(fields: [authorId], references: [id])
+  targets     PostTarget[]
+  media       PostMedia[]
+  metrics     PostMetrics?
+
+  @@index([workspaceId])
+  @@index([authorId])
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([workspaceId, status])
+  @@map("posts")
+}
+
+model PostTarget {
+  id              String     @id @default(cuid())
+  postId          String
+  socialAccountId String
+  platform        Platform
+  status          PostStatus @default(DRAFT)
+  platformPostId  String?    // ID returned by the social platform after publishing
+  publishedAt     DateTime?
+  failureReason   String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  post          Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  socialAccount SocialAccount @relation(fields: [socialAccountId], references: [id])
+
+  @@unique([postId, socialAccountId])
+  @@index([postId])
+  @@index([socialAccountId])
+  @@map("post_targets")
+}
+
+model PostMedia {
+  id        String   @id @default(cuid())
+  postId    String
+  url       String
+  mimeType  String
+  filename  String
+  sizeBytes Int
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@map("post_media")
+}
+
+model PostMetrics {
+  id          String   @id @default(cuid())
+  postId      String   @unique
+  reach       Int      @default(0)
+  impressions Int      @default(0)
+  engagement  Float    @default(0)
+  clicks      Int      @default(0)
+  likes       Int      @default(0)
+  shares      Int      @default(0)
+  comments    Int      @default(0)
+  updatedAt   DateTime @updatedAt
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("post_metrics")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Brand Voice
+// ─────────────────────────────────────────────────────────────
+
+model BrandVoice {
+  id              String   @id @default(cuid())
+  workspaceId     String   @unique
+  defaultTone     AITone   @default(CONVERSATIONAL)
+  championWords   String[] @default([])
+  avoidWords      String[] @default([])
+  description     String?
+  postsAnalyzed   Int      @default(0)
+  voiceMatchScore Float    @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("brand_voices")
+}
+
+// ─────────────────────────────────────────────────────────────
+// AI
+// ─────────────────────────────────────────────────────────────
+
+model AIConversation {
+  id          String   @id @default(cuid())
+  workspaceId String
+  userId      String
+  title       String?
+  model       AIModel  @default(CADENCE_4)
+  voiceStyle  AITone   @default(CONVERSATIONAL)
+  platform    Platform?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [userId], references: [id])
+  messages  AIMessage[]
+
+  @@index([workspaceId])
+  @@index([userId])
+  @@map("ai_conversations")
+}
+
+model AIMessage {
+  id             String   @id @default(cuid())
+  conversationId String
+  role           String   // 'user' | 'assistant'
+  content        String
+  tokensUsed     Int      @default(0)
+  createdAt      DateTime @default(now())
+
+  conversation AIConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@map("ai_messages")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Activity Log
+// ─────────────────────────────────────────────────────────────
+
+model ActivityLog {
+  id          String       @id @default(cuid())
+  workspaceId String
+  userId      String?
+  type        ActivityType
+  description String
+  metadata    Json?
+  createdAt   DateTime     @default(now())
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId])
+  @@index([createdAt])
+  @@map("activity_logs")
+}

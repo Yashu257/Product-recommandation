@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PharmaWebcast — Full Preview</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232d7a2d'/><text x='16' y='22' text-anchor='middle' font-size='18' font-family='Arial' font-weight='bold' fill='white'>P</text></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/vendor/bootstrap-icons/bootstrap-icons.min.css">
+<style>
+/* ── global ── */
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f1f5f9;}
+.page{display:none;min-height:100vh;}
+.page.active{display:flex;flex-direction:column;}
+
+/* ── nav bar ── */
+#nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  background:rgba(15,23,42,.92);backdrop-filter:blur(10px);
+  border-top:1px solid #334155;display:flex;gap:0;overflow-x:auto;}
+#nav-bar button{flex:1;min-width:100px;padding:.6rem .4rem;border:none;
+  background:transparent;color:#94a3b8;font-size:.72rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.05em;cursor:pointer;transition:all .2s;
+  border-top:2px solid transparent;}
+#nav-bar button:hover{color:#e2e8f0;background:rgba(255,255,255,.04);}
+#nav-bar button.active{color:#60a5fa;border-top-color:#3b82f6;background:rgba(59,130,246,.08);}
+#nav-bar .sep{width:1px;background:#334155;margin:.4rem 0;flex-shrink:0;}
+
+/* ── page paddings ── */
+.page-content{flex:1;padding-bottom:70px;}
+
+/* ======================================================
+   PAGE 1 — REGISTRATION  (nature background style)
+====================================================== */
+#page-register{
+  background:radial-gradient(ellipse at 70% 40%, #b5c9a0 0%, #8fac78 30%, #6b8f55 60%, #4a6b3a 100%);
+  position:relative;overflow:hidden;padding-bottom:70px;
+}
+#page-register::after{
+  content:'';position:absolute;right:-60px;top:-40px;
+  width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.reg-nature-left{
+  padding:3rem 3rem 3rem 4rem;flex:0 0 42%;min-width:280px;
+  display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;
+}
+.reg-logos{display:flex;align-items:center;gap:1.2rem;margin-bottom:2.5rem;}
+.reg-logo-main{font-size:1.6rem;font-weight:900;color:#fff;letter-spacing:-.02em;
+  display:flex;align-items:center;gap:.5rem;}
+.reg-logo-main .logo-star{color:#e05c00;}
+.reg-logo-badge{width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.6);
+  background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:800;color:#fff;text-align:center;line-height:1.2;letter-spacing:.03em;}
+.reg-field{margin-bottom:1.1rem;}
+.reg-field input{
+  width:100%;background:transparent;border:none;border-bottom:2px solid rgba(255,255,255,.7);
+  color:#fff;font-size:1rem;padding:.6rem 0;outline:none;
+  letter-spacing:.08em;font-weight:500;
+}
+.reg-field input::placeholder{color:rgba(255,255,255,.6);font-size:.9rem;letter-spacing:.08em;}
+.reg-field input:focus{border-bottom-color:#fff;}
+.btn-reg-login{
+  margin-top:1.8rem;background:#fff;border:none;color:#3a5a2a;
+  font-weight:800;font-size:.95rem;letter-spacing:.08em;
+  padding:.75rem 2.5rem;border-radius:999px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s;
+}
+.btn-reg-login:hover{transform:scale(1.03);}
+.reg-switch{margin-top:1rem;font-size:.82rem;color:rgba(255,255,255,.75);}
+.reg-switch a{color:#fff;font-weight:700;text-decoration:underline;cursor:pointer;}
+
+/* ======================================================
+   PAGE 2 — LOGIN  (same nature background)
+====================================================== */
+#page-login{
+  background:radial-gradient(ellipse at 70% 40%, #b5c9a0 0%, #8fac78 30%, #6b8f55 60%, #4a6b3a 100%);
+  position:relative;overflow:hidden;
+}
+#page-login::after{content:'';position:absolute;right:-60px;top:-40px;
+  width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);
+  pointer-events:none;}
+.login-nature-left{
+  padding:3rem 3rem 3rem 4rem;flex:0 0 40%;min-width:260px;
+  display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;
+}
+.login-logos{display:flex;align-items:center;gap:1.2rem;margin-bottom:2.5rem;}
+.login-logo-main{font-size:1.6rem;font-weight:900;color:#fff;letter-spacing:-.02em;
+  display:flex;align-items:center;gap:.5rem;}
+.login-logo-badge{width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.6);
+  background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:800;color:#fff;text-align:center;line-height:1.2;letter-spacing:.03em;}
+.login-field{margin-bottom:1.1rem;}
+.login-field input{
+  width:100%;background:transparent;border:none;border-bottom:2px solid rgba(255,255,255,.7);
+  color:#fff;font-size:1rem;padding:.6rem 0;outline:none;
+  letter-spacing:.08em;font-weight:500;
+}
+.login-field input::placeholder{color:rgba(255,255,255,.6);font-size:.9rem;letter-spacing:.08em;}
+.login-field input:focus{border-bottom-color:#fff;}
+.btn-nature-login{
+  margin-top:1.8rem;background:#fff;border:none;color:#3a5a2a;
+  font-weight:800;font-size:.95rem;letter-spacing:.08em;
+  padding:.75rem 2.5rem;border-radius:999px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s;
+}
+.btn-nature-login:hover{transform:scale(1.03);}
+.login-switch{margin-top:1rem;font-size:.82rem;color:rgba(255,255,255,.75);}
+.login-switch a{color:#fff;font-weight:700;text-decoration:underline;cursor:pointer;}
+/* legacy refs kept for compatibility */
+.login-footer a{color:#fff;font-weight:600;text-decoration:none;}
+
+/* ======================================================
+   PAGE 3 — WEBCAST ROOM (matches coact.live reference)
+====================================================== */
+.wc-wrap{display:flex;flex-direction:column;height:calc(100vh - 70px);}
+/* top bar — left part normal, right part orange */
+.wc-topbar{display:flex;align-items:stretch;flex-shrink:0;height:42px;}
+.wc-topbar-left{flex:1;background:#fff;border-bottom:1px solid #ddd;display:flex;align-items:center;padding:0 1rem;gap:.75rem;}
+.wc-topbar-right{background:#fff;border-bottom:1px solid #ddd;border-left:1px solid #ddd;display:flex;align-items:center;
+  padding:0 1rem;gap:.75rem;white-space:nowrap;}
+.live-badge{background:#000;color:#fff;font-size:.65rem;font-weight:800;
+  letter-spacing:.1em;padding:.2rem .55rem;border-radius:3px;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.wc-title{font-size:.88rem;font-weight:700;color:#000;margin:0;}
+.wc-user-name{color:#000;font-size:.85rem;font-weight:600;}
+.wc-feedback-btn{background:transparent;border:1px solid #999;color:#333;font-weight:600;
+  font-size:.8rem;padding:.3rem .8rem;border-radius:4px;cursor:pointer;}
+.wc-feedback-btn:hover{background:#f0f0f0;}
+.wc-logout-btn{background:#000;border:none;color:#fff;font-weight:700;
+  font-size:.8rem;padding:.3rem .8rem;border-radius:4px;cursor:pointer;}
+/* body */
+.wc-body{display:flex;flex:1;min-height:0;}
+/* LEFT — white background, black video box inside */
+.wc-left{flex:1;min-width:0;position:relative;overflow:hidden;
+  background:#fff;
+  display:flex;flex-direction:column;align-items:stretch;}
+/* actual video box */
+.wc-video-box{
+  flex:1;background:#000;margin:0;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+/* bottom strip shows white background below video */
+.wc-left-footer{height:80px;flex-shrink:0;background:#fff;}
+.wc-player-placeholder{text-align:center;color:#888;}
+.wc-player-placeholder i{font-size:4rem;display:block;margin-bottom:.4rem;color:#888;}
+.wc-player-placeholder p{font-size:.82rem;margin:0;color:#999;}
+/* RIGHT — panel always split: Q&A top (~55%), Poll bottom (~45%) */
+.wc-panel{width:38%;min-width:260px;max-width:460px;flex-shrink:0;
+  display:flex;flex-direction:column;background:#fff;border-left:1px solid #ddd;}
+/* Q&A section top */
+.wc-qa-section{display:flex;flex-direction:column;flex:0 0 55%;border-bottom:1px solid #ddd;overflow:hidden;}
+.wc-section-hdr{padding:.6rem .9rem;font-size:.9rem;font-weight:700;color:#000;flex-shrink:0;}
+.wc-qa-input-area{flex:1;display:flex;flex-direction:column;padding:.5rem .9rem .5rem;}
+.qa-textarea{width:100%;flex:1;background:#fff;border:1px solid #ccc;border-radius:4px;
+  color:#000;padding:.55rem .7rem;font-size:.85rem;resize:none;outline:none;min-height:80px;}
+.qa-textarea:focus{border-color:#000;}
+.qa-send{margin-top:.5rem;width:100%;background:#000;border:1px solid #000;color:#fff;
+  border-radius:4px;padding:.6rem;font-size:.88rem;font-weight:700;cursor:pointer;}
+.qa-send:hover{background:#333;}
+/* Poll section bottom */
+.wc-poll-section{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.wc-poll-hdr{background:#000;padding:.5rem .9rem;font-size:.85rem;
+  font-weight:800;color:#fff;letter-spacing:.05em;text-transform:uppercase;flex-shrink:0;}
+.wc-poll-body{flex:1;overflow-y:auto;padding:.75rem .9rem;}
+.poll-question-title{font-size:.88rem;font-weight:600;color:#000;margin-bottom:.8rem;}
+/* Poll results bars */
+.poll-bar-row{margin-bottom:.7rem;}
+.poll-bar-label{display:flex;justify-content:space-between;font-size:.82rem;
+  margin-bottom:.25rem;color:#000;font-weight:600;}
+.poll-bar-track{background:#e0e0e0;border-radius:2px;height:12px;overflow:hidden;}
+.poll-bar-fill{height:100%;border-radius:2px;background:#000;transition:width .7s ease;}
+.poll-total-note{font-size:.72rem;color:#666;margin-top:.5rem;}
+.poll-opt-btn{
+  display:block;width:100%;text-align:left;background:#f5f5f5;border:1.5px solid #ddd;
+  border-radius:6px;padding:.55rem .8rem;font-size:.85rem;font-weight:600;color:#111;
+  cursor:pointer;margin-bottom:.5rem;transition:background .15s,border-color .15s;
+}
+.poll-opt-btn:hover{background:#e8e8e8;border-color:#999;}
+.poll-voted-note{font-size:.75rem;color:#555;margin-top:.4rem;text-align:center;}
+
+/* Quiz/Survey — modal-style overlay trigger from topbar */
+.wc-extra-btn{background:#1a1a2e;border:1px solid #e05c00;color:#f0a070;
+  font-size:.75rem;font-weight:600;border-radius:5px;padding:.28rem .7rem;cursor:pointer;}
+.wc-extra-btn:hover{background:#e05c00;color:#fff;}
+/* quiz inline card (shown inside right panel as overlay) */
+.quiz-overlay{display:none;position:absolute;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.85);z-index:10;align-items:center;justify-content:center;}
+.quiz-overlay.show{display:flex;}
+.quiz-box{background:#fff;border-radius:12px;padding:1.5rem;max-width:400px;width:90%;}
+.quiz-box h4{font-size:1rem;font-weight:800;color:#1a1a2e;margin:0 0 .5rem;}
+.quiz-box p{font-size:.83rem;color:#555;margin:0 0 1rem;}
+.quiz-opt{display:flex;align-items:center;gap:.6rem;border:1.5px solid #ddd;
+  border-radius:6px;padding:.5rem .75rem;margin-bottom:.4rem;cursor:pointer;}
+.quiz-opt:hover{border-color:#e05c00;background:#fff5f0;}
+.quiz-opt input{accent-color:#e05c00;}
+.quiz-opt label{font-size:.85rem;color:#333;cursor:pointer;margin:0;}
+.quiz-submit{width:100%;margin-top:.75rem;background:#1a1a2e;border:none;color:#fff;
+  border-radius:6px;padding:.6rem;font-weight:700;cursor:pointer;font-size:.88rem;}
+.quiz-close{float:right;background:none;border:none;font-size:1.2rem;
+  color:#aaa;cursor:pointer;margin-top:-.25rem;}
+
+/* Survey pane */
+.survey-q{margin-bottom:1rem;}
+.survey-q label{display:block;font-size:.82rem;font-weight:600;color:#333;margin-bottom:.35rem;}
+.survey-q .star-row{display:flex;gap:.3rem;}
+.star-btn{background:none;border:none;font-size:1.4rem;color:#ddd;cursor:pointer;transition:.1s;}
+.star-btn:hover,.star-btn.on{color:#f59e0b;}
+.survey-ta{width:100%;background:#fff;border:1.5px solid #ccc;border-radius:6px;
+  color:#222;padding:.55rem .7rem;font-size:.83rem;resize:none;outline:none;min-height:70px;}
+.survey-submit{width:100%;background:#2ecc40;border:none;color:#fff;border-radius:6px;
+  padding:.6rem;font-weight:700;cursor:pointer;font-size:.88rem;margin-top:.5rem;}
+
+/* ======================================================
+   PAGE 4 — ADMIN LOGIN  (hidden, plain dark)
+====================================================== */
+#page-admin-login{background:#1a1a1a;}
+.admin-login-card{background:#fff;border-radius:8px;
+  box-shadow:0 4px 24px rgba(0,0,0,.3);padding:2.5rem 2rem;width:100%;max-width:380px;margin:1rem;}
+.admin-login-logo{text-align:center;margin-bottom:1.8rem;}
+.admin-login-logo h1{color:#1a1a1a;font-size:1.2rem;font-weight:800;margin:0 0 .2rem;}
+.admin-login-logo p{color:#666;font-size:.8rem;margin:0;}
+.adm-field label{display:block;font-size:.85rem;font-weight:600;color:#333;margin-bottom:.35rem;}
+.adm-field input{width:100%;background:#f5f5f5;border:1.5px solid #ddd;
+  border-radius:6px;padding:.65rem .9rem;color:#222;font-size:.92rem;outline:none;}
+.adm-field input:focus{border-color:#2a7a2a;}
+.adm-field{margin-bottom:1rem;}
+.btn-admin-login{width:100%;background:#2a7a2a;border:none;color:#fff;font-weight:700;
+  border-radius:6px;padding:.75rem;font-size:.95rem;cursor:pointer;margin-top:.5rem;}
+.btn-admin-login:hover{background:#1d5c1d;}
+.admin-security-note{text-align:center;margin-top:1rem;font-size:.73rem;color:#999;
+  display:flex;align-items:center;justify-content:center;gap:.4rem;}
+
+/* ======================================================
+   PAGE 5 — ADMIN DASHBOARD  (matches GBS reference)
+====================================================== */
+.adm-wrap{display:flex;flex-direction:column;height:calc(100vh - 70px);background:#f0f0e8;}
+/* green header bar */
+.adm-green-header{background:#2d7a2d;padding:.7rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.adm-gbs-logo{display:flex;align-items:center;gap:.5rem;}
+.adm-gbs-text{font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:-.02em;}
+.adm-gbs-text .logo-star-r{color:#e05c00;}
+.adm-gbs-text .logo-star-g{color:#2ecc40;}
+.adm-gbs-text .logo-star-b{color:#3b82f6;}
+.adm-gbs-sub{font-size:.65rem;color:rgba(255,255,255,.7);margin-top:.1rem;}
+.adm-circle-badge{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.6);
+  background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;
+  font-size:.55rem;font-weight:800;color:#fff;text-align:center;line-height:1.2;letter-spacing:.03em;}
+/* sub-nav */
+.adm-subnav{background:#fff;border-bottom:1px solid #ccc;padding:.5rem 1.5rem;
+  display:flex;align-items:center;gap:.25rem;flex-shrink:0;}
+.adm-subnav a{color:#2a7a2a;font-weight:600;font-size:.9rem;text-decoration:none;padding:0 .1rem;}
+.adm-subnav a:hover{text-decoration:underline;}
+.adm-subnav .sep{color:#999;margin:0 .3rem;}
+/* content */
+.adm-page-content{flex:1;overflow-y:auto;padding:1rem 1.5rem;background:#f0f0e8;}
+.adm-section{display:none;}
+.adm-section.active{display:block;}
+/* toolbar row */
+.adm-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
+.adm-toolbar-left{display:flex;align-items:center;gap:1.5rem;font-size:.88rem;color:#333;}
+.adm-toolbar-left strong{color:#222;}
+.adm-excel-btn{background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;gap:.4rem;color:#2a7a2a;font-size:.82rem;}
+/* users table */
+.adm-table{width:100%;border-collapse:collapse;background:#fff;font-size:.88rem;}
+.adm-table th{padding:.6rem 1rem;text-align:left;color:#222;font-weight:700;
+  border-bottom:2px solid #ccc;background:#e8e8d8;}
+.adm-table td{padding:.55rem 1rem;color:#333;border-bottom:1px solid #e0e0d0;}
+.adm-table tr:nth-child(even) td{background:#f5f5eb;}
+.adm-table tr:hover td{background:#eaeadc;}
+/* keep legacy classes working */
+.adm-nav-link{display:none;}
+.adm-sidebar{display:none;}
+.adm-main{flex:1;overflow-y:auto;}
+.adm-topbar{display:none;}
+.adm-card{background:#fff;border:1px solid #ddd;border-radius:4px;overflow:hidden;margin-bottom:1rem;}
+.adm-card-hdr{padding:.7rem 1rem;border-bottom:1px solid #ddd;background:#e8e8d8;
+  display:flex;align-items:center;justify-content:space-between;}
+.adm-card-hdr h3{font-size:.9rem;font-weight:700;color:#222;margin:0;}
+.adm-card-hdr a{font-size:.78rem;color:#2a7a2a;text-decoration:none;}
+.stat-grid{display:none;}
+.badge-approved{background:#d4edda;color:#1d5c1d;padding:.2rem .55rem;border-radius:4px;font-size:.72rem;font-weight:600;}
+.badge-pending{background:#fff3cd;color:#856404;padding:.2rem .55rem;border-radius:4px;font-size:.72rem;font-weight:600;}
+.badge-rejected{background:#f8d7da;color:#721c24;padding:.2rem .55rem;border-radius:4px;font-size:.72rem;font-weight:600;}
+.badge-live{background:rgba(239,68,68,.12);color:#f87171;padding:.2rem .55rem;border-radius:4px;font-size:.72rem;font-weight:600;}
+
+/* report download btn */
+.btn-dl{background:#1d4ed8;border:none;color:#fff;border-radius:6px;
+  padding:.3rem .7rem;font-size:.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:.3rem;}
+.btn-dl:hover{background:#1e40af;}
+.btn-sm-action{background:transparent;border:1px solid #334155;color:#94a3b8;border-radius:6px;
+  padding:.28rem .6rem;font-size:.72rem;cursor:pointer;}
+.btn-sm-action:hover{border-color:#60a5fa;color:#60a5fa;}
+
+/* attendance live indicator */
+.live-dot{width:8px;height:8px;background:#ef4444;border-radius:50%;
+  animation:pulse 1.5s infinite;display:inline-block;margin-right:4px;}
+
+/* chart placeholder */
+.chart-ph{background:rgba(15,23,42,.5);border-radius:8px;height:200px;
+  display:flex;align-items:center;justify-content:center;color:#334155;
+  font-size:.8rem;flex-direction:column;gap:.5rem;}
+.chart-ph i{font-size:2rem;}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;}
+
+/* ── transitions ── */
+.page{animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ══════════════════════════════════════════
+   MOBILE RESPONSIVE  (≤ 768px)
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Nav bar — smaller text, scrollable */
+  #nav-bar button{font-size:.6rem;padding:.5rem .25rem;min-width:70px;}
+
+  /* Register / Login — full width column */
+  #page-register,#page-login{flex-direction:column !important;}
+  .reg-nature-left,.login-nature-left{
+    flex:none !important;min-width:unset !important;
+    padding:2rem 1.5rem 1.5rem !important;width:100%;
+  }
+  #page-register > div:last-child,
+  #page-login  > div:last-child{display:none;}
+
+  /* Webcast — stack video above panel */
+  .wc-wrap{height:auto;min-height:calc(100vh - 70px);}
+  .wc-topbar{height:auto;flex-wrap:wrap;padding:.4rem .6rem;gap:.4rem;}
+  .wc-topbar-left{flex:1 1 100%;border-right:none;padding:.3rem 0;}
+  .wc-topbar-right{width:100%;border-left:none;border-top:1px solid #ddd;padding:.3rem 0;justify-content:flex-end;}
+  .wc-body{flex-direction:column;}
+  .wc-left{height:220px;flex:none;}
+  .wc-left-footer{height:20px;}
+  .wc-panel{width:100% !important;max-width:100% !important;border-left:none;border-top:1px solid #ddd;height:auto;}
+  .wc-qa-section{flex:none;height:auto;max-height:280px;}
+  .wc-poll-section{flex:none;}
+  .wc-poll-body{max-height:200px;}
+
+  /* Admin dashboard — scrollable table */
+  .adm-green-header{flex-wrap:wrap;gap:.5rem;padding:.6rem 1rem;}
+  .adm-subnav{padding:.4rem 1rem;font-size:.82rem;flex-wrap:wrap;}
+  .adm-page-content{padding:.75rem 1rem;}
+  .adm-table{font-size:.78rem;}
+  .adm-table th,.adm-table td{padding:.4rem .6rem;}
+  .adm-section{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+  /* Feedback modal */
+  .feedback-modal-box{width:95% !important;margin:0 auto;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ PAGE 1: REGISTRATION ═══════════ -->
+<div id="page-register" class="page active" style="flex-direction:row;align-items:stretch;min-height:calc(100vh - 70px);">
+  <div class="reg-nature-left">
+    <div class="reg-logos">
+      <div class="reg-logo-main">
+        <span style="color:#e74c3c;">◀</span><span style="color:#3b82f6;">▶</span>GBS
+        <span style="font-size:1rem;font-weight:400;color:rgba(255,255,255,.7);">Global Business Services</span>
+      </div>
+      <div class="reg-logo-badge">B<br>A·Y<br>E·R</div>
+    </div>
+    <div class="reg-field">
+      <input type="text" id="reg-name" placeholder="NAME" autocomplete="name" oninput="clearFormError('reg-error')">
+    </div>
+    <div class="reg-field">
+      <input type="tel" id="reg-mobile" placeholder="MOBILE NUMBER" autocomplete="tel" oninput="clearFormError('reg-error')" maxlength="15">
+    </div>
+    <div class="reg-field">
+      <input type="email" id="reg-email" placeholder="EMAIL ID" autocomplete="email" oninput="clearFormError('reg-error')">
+    </div>
+    <div id="reg-error" style="color:#ffe0e0;font-size:.82rem;margin-top:.3rem;min-height:1.2rem;"></div>
+    <button class="btn-reg-login" id="reg-btn" onclick="handleRegister()">REGISTER</button>
+    <div class="reg-switch" style="margin-top:1.2rem;">Already registered? <a onclick="showPage('login');return false;">Log in here</a></div>
+  </div>
+  <div style="flex:1;"></div>
+</div>
+
+<!-- ═══════════ PAGE 2: LOGIN ═══════════ -->
+<div id="page-login" class="page" style="flex-direction:row;align-items:stretch;min-height:calc(100vh - 70px);">
+  <div class="login-nature-left">
+    <div class="login-logos">
+      <div class="login-logo-main">
+        <span style="color:#e74c3c;">◀</span><span style="color:#3b82f6;">▶</span>GBS
+        <span style="font-size:1rem;font-weight:400;color:rgba(255,255,255,.7);">Global Business Services</span>
+      </div>
+      <div class="login-logo-badge">B<br>A·Y<br>E·R</div>
+    </div>
+    <div class="login-field">
+      <input type="text" id="login-name" placeholder="NAME" autocomplete="name" oninput="clearFormError('login-error')">
+    </div>
+    <div class="login-field">
+      <input type="email" id="login-email" placeholder="EMAIL ID" autocomplete="email" oninput="clearFormError('login-error')">
+    </div>
+    <div id="login-error" style="color:#ffe0e0;font-size:.82rem;margin-top:.3rem;min-height:1.2rem;"></div>
+    <button class="btn-nature-login" id="login-btn" onclick="handleLogin()">LOGIN</button>
+    <div class="login-switch" style="margin-top:1.2rem;">New here? <a onclick="showPage('register');return false;">Register now</a></div>
+  </div>
+  <div style="flex:1;"></div>
+</div>
+
+<!-- ═══════════ PAGE 3: WEBCAST ROOM ═══════════ -->
+<div id="page-webcast" class="page" style="padding-bottom:70px;">
+  <div class="wc-wrap">
+
+    <!-- Top bar -->
+    <div class="wc-topbar">
+      <div class="wc-topbar-left">
+        <span class="live-badge">● LIVE</span>
+      </div>
+      <div class="wc-topbar-right">
+        <span class="wc-user-name">Hello Dr. Rajesh Mehta!</span>
+        <button class="wc-feedback-btn" onclick="toggleFeedbackModal()">&#9733; Feedback</button>
+        <button class="wc-logout-btn" onclick="handleLogout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- Body: left (bg+video) + right panel -->
+    <div class="wc-body">
+
+      <!-- LEFT — video -->
+      <div class="wc-left">
+        <div class="wc-video-box" id="wc-video-box">
+          <iframe
+            id="mux-iframe"
+            src="https://player.mux.com/pYkIiT3UwTn4kH00fLd1265xLqatC5wROI5DIbVNCJe00"
+            style="width:100%;height:100%;border:none;"
+            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+            allowfullscreen>
+          </iframe>
+          <div id="stream-offline" style="display:none;position:absolute;inset:0;background:#000;
+            align-items:center;justify-content:center;flex-direction:column;gap:.75rem;text-align:center;">
+            <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.08);
+              display:flex;align-items:center;justify-content:center;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+              </svg>
+            </div>
+            <div>
+              <p style="color:#fff;font-size:.95rem;font-weight:700;margin:0;">Stream is Offline</p>
+              <p style="color:#666;font-size:.78rem;margin:.3rem 0 0;">The live broadcast has not started yet.<br>Please check back shortly.</p>
+            </div>
+          </div>
+        </div>
+        <!-- background strip visible below video -->
+        <div class="wc-left-footer"></div>
+      </div>
+
+      <!-- RIGHT — always-visible panel: Q&A top, Poll Results bottom -->
+      <div class="wc-panel">
+
+        <!-- Q&A section -->
+        <div class="wc-qa-section">
+          <div class="wc-section-hdr">Ask your Question:</div>
+          <div class="wc-qa-input-area">
+            <textarea class="qa-textarea" id="qa-input" placeholder="Please ask your question"></textarea>
+            <button class="qa-send" onclick="sendQ()">Submit Question</button>
+          </div>
+        </div>
+
+        <!-- Poll section -->
+        <div class="wc-poll-section">
+          <div class="wc-poll-hdr">POLL</div>
+          <div class="wc-poll-body" id="poll-body">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+
+      </div><!-- wc-panel -->
+    </div><!-- wc-body -->
+  </div>
+
+  <!-- Feedback Modal -->
+  <div id="feedback-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,.55);z-index:9000;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:10px;padding:2rem;width:90%;max-width:420px;
+      box-shadow:0 8px 40px rgba(0,0,0,.3);position:relative;">
+      <button onclick="toggleFeedbackModal()" style="position:absolute;top:.8rem;right:1rem;
+        background:none;border:none;font-size:1.3rem;cursor:pointer;color:#888;">✕</button>
+      <h3 style="font-size:1rem;font-weight:800;color:#111;margin-bottom:1.2rem;">Session Feedback</h3>
+      <div style="margin-bottom:1rem;">
+        <label style="font-size:.82rem;font-weight:700;color:#333;display:block;margin-bottom:.4rem;">Your Message</label>
+        <textarea id="feedback-text" rows="4" placeholder="Share your thoughts about this session…"
+          style="width:100%;border:1.5px solid #ccc;border-radius:6px;padding:.6rem .8rem;
+          font-size:.88rem;resize:none;outline:none;font-family:inherit;"></textarea>
+      </div>
+      <div id="feedback-error" style="color:#c0392b;font-size:.8rem;margin-bottom:.6rem;min-height:1rem;"></div>
+      <button id="feedback-submit-btn" onclick="submitFeedback()"
+        style="width:100%;background:#000;border:none;color:#fff;font-weight:700;
+        font-size:.92rem;padding:.7rem;border-radius:6px;cursor:pointer;">Submit Feedback</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 4: ADMIN LOGIN ═══════════ -->
+<div id="page-admin-login" class="page page-content" style="align-items:center;justify-content:center;">
+  <div class="admin-login-card">
+    <div class="admin-login-logo">
+      <h1>Admin Login</h1>
+      <p>Authorised personnel only</p>
+    </div>
+    <div class="adm-field">
+      <label>Username</label>
+      <input type="text" placeholder="Enter username">
+    </div>
+    <div class="adm-field">
+      <label>Password</label>
+      <input type="password" placeholder="Enter password">
+    </div>
+    <button class="btn-admin-login" onclick="showPage('admin-dashboard')">Login</button>
+    <div class="admin-security-note">
+      <i class="bi bi-lock-fill"></i> Restricted access · All sessions are logged
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 5: ADMIN DASHBOARD ═══════════ -->
+<div id="page-admin-dashboard" class="page" style="padding-bottom:70px;flex-direction:column;">
+  <div class="adm-wrap">
+    <!-- Green header -->
+    <div class="adm-green-header">
+      <div class="adm-gbs-logo">
+        <div>
+          <div class="adm-gbs-text"><span class="logo-star-r">◀</span><span class="logo-star-g">▶</span>GBS</div>
+          <div class="adm-gbs-sub">Global Business Services</div>
+        </div>
+      </div>
+      <div class="adm-circle-badge">B<br>A·Y<br>E·R</div>
+    </div>
+    <!-- Sub nav -->
+    <div class="adm-subnav">
+      <a href="#" onclick="admSection('users',this);return false;">Users</a>
+      <span class="sep">|</span>
+      <a href="#" onclick="admSection('questions',this);return false;">Questions</a>
+      <span class="sep">|</span>
+      <a href="#" onclick="admSection('feedback',this);return false;">Feedback</a>
+    </div>
+    <!-- Content -->
+    <div class="adm-page-content">
+
+      <!-- USERS section (default) -->
+      <div id="adm-section-users" class="adm-section active">
+        <div class="adm-toolbar">
+          <button class="adm-excel-btn"><i class="bi bi-file-earmark-excel" style="font-size:1.8rem;color:#1d6f2a;"></i></button>
+          <div class="adm-toolbar-left">
+            <span>Total Users: <strong>51</strong></span>
+            <span>Currently Logged In: <strong>0</strong></span>
+          </div>
+        </div>
+        <table class="adm-table">
+          <thead><tr><th>Name</th><th>Email ID</th><th>Login Time</th><th>Logout Time</th></tr></thead>
+          <tbody>
+            <tr><td>pawan</td><td>Pawan@coact.co.in</td><td>Jul 03, 10:29 am</td><td>Jul 03, 11:38 am</td></tr>
+            <tr><td>eugyjdh</td><td>admin@coact.com</td><td>Jul 03, 09:53 am</td><td>Jul 03, 09:54 am</td></tr>
+            <tr><td>shraddha</td><td>shraddha.salvo@bayer.com</td><td>Jul 02, 13:47 pm</td><td>Jul 02, 13:56 pm</td></tr>
+            <tr><td>bashas</td><td>neeraj@coact.co.in</td><td>Jun 29, 17:39 pm</td><td>Jun 29, 17:47 pm</td></tr>
+            <tr><td>Muthu</td><td>muthu@coact.co.in</td><td>Jun 29, 16:42 pm</td><td>Jun 29, 16:55 pm</td></tr>
+            <tr><td>basha</td><td>hussain@coact.co.in</td><td>Jun 25, 18:00 pm</td><td>Jun 25, 18:00 pm</td></tr>
+            <tr><td>basha</td><td>hussainbasha911@gmail.com</td><td>Jun 24, 15:37 pm</td><td>Jun 24, 15:37 pm</td></tr>
+            <tr><td>Basamma</td><td>basammagk21@gmail.com</td><td>Jun 22, 17:53 pm</td><td>Jun 22, 17:56 pm</td></tr>
+            <tr><td>megha</td><td>megha@coact.co.in</td><td>Jun 22, 17:53 pm</td><td>Jun 22, 18:06 pm</td></tr>
+            <tr><td>PAWAN SHILWANT</td><td>test@bayer.com</td><td>Jun 22, 17:51 pm</td><td>Jun 22, 17:54 pm</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- QUESTIONS section -->
+      <div id="adm-section-questions" class="adm-section">
+        <table class="adm-table">
+          <thead><tr><th>Name</th><th>Email ID</th><th>Question</th><th>Time</th></tr></thead>
+          <tbody>
+            <tr><td>Dr. Rajesh Mehta</td><td>rajesh@apollo.com</td><td>What is the first-line therapy for NSCLC with EGFR mutation?</td><td>Jul 03, 2:15 pm</td></tr>
+            <tr><td>Dr. Anitha K.</td><td>anitha@medplus.in</td><td>Role of immunotherapy in triple-negative breast cancer?</td><td>Jul 03, 2:20 pm</td></tr>
+            <tr><td>Dr. Suresh Patel</td><td>s.patel@fortis.com</td><td>What biomarkers before starting CDK4/6 inhibitors?</td><td>Jul 03, 2:32 pm</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- FEEDBACK section -->
+      <div id="adm-section-feedback" class="adm-section">
+        <table class="adm-table">
+          <thead><tr><th>Name</th><th>Email ID</th><th>Rating</th><th>Comments</th><th>Time</th></tr></thead>
+          <tbody>
+            <tr><td>Dr. Rajesh Mehta</td><td>rajesh@apollo.com</td><td>★★★★★</td><td>Excellent session, very relevant.</td><td>Jul 03, 5:10 pm</td></tr>
+            <tr><td>Dr. Anitha K.</td><td>anitha@medplus.in</td><td>★★★★☆</td><td>Good content, could use more case studies.</td><td>Jul 03, 5:15 pm</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- adm-page-content (new) -->
+  </div><!-- adm-wrap (new) -->
+</div><!-- page-admin-dashboard -->
+
+<!-- old sidebar/main removed -->
+<div style="display:none"><div>
+      <div class="adm-brand"><i class="bi bi-broadcast"></i><span>PharmaWebcast</span></div>
+      <div class="adm-nav-group">OVERVIEW</div>
+      <button class="adm-nav-link active" onclick="admSection('dashboard',this)"><i class="bi bi-speedometer2"></i>Dashboard</button>
+      <button class="adm-nav-link" onclick="admSection('events',this)"><i class="bi bi-calendar-event"></i>Events</button>
+      <div class="adm-nav-group">ATTENDEES</div>
+      <button class="adm-nav-link" onclick="admSection('attendees',this)"><i class="bi bi-people"></i>All Attendees</button>
+      <button class="adm-nav-link" onclick="admSection('registrations',this)"><i class="bi bi-clipboard-check"></i>Registrations</button>
+      <div class="adm-nav-group">LIVE EVENT</div>
+      <button class="adm-nav-link" onclick="admSection('questions',this)"><i class="bi bi-chat-square-text"></i>Questions <span style="background:#ef4444;color:#fff;font-size:.62rem;padding:.1rem .35rem;border-radius:4px;margin-left:auto;">3</span></button>
+      <button class="adm-nav-link" onclick="admSection('polls',this)"><i class="bi bi-bar-chart"></i>Polls</button>
+      <button class="adm-nav-link" onclick="admSection('webcast',this)"><i class="bi bi-broadcast"></i>Webcast Ctrl</button>
+      <div class="adm-nav-group">ANALYTICS</div>
+      <button class="adm-nav-link" onclick="admSection('attendance',this)"><i class="bi bi-graph-up"></i>Attendance</button>
+      <button class="adm-nav-link" onclick="admSection('reports',this)"><i class="bi bi-file-earmark-bar-graph"></i>Reports</button>
+      <button class="adm-nav-link" onclick="admSection('feedback',this)"><i class="bi bi-star-half"></i>Feedback</button>
+      <div class="adm-nav-group">CONFIGURATION</div>
+      <button class="adm-nav-link" onclick="admSection('settings',this)"><i class="bi bi-gear"></i>Settings</button>
+      <button class="adm-nav-link" onclick="admSection('emails',this)"><i class="bi bi-envelope"></i>Email Queue</button>
+    </div>
+    <!-- Main -->
+    <div class="adm-main">
+      <div class="adm-topbar">
+        <p class="adm-topbar-title" id="adm-page-title">Dashboard</p>
+        <div class="adm-topbar-right">
+          <span class="adm-topbar-email">admin@pharmawebcast.com</span>
+          <div class="adm-avatar">A</div>
+          <button class="btn-sm-action" onclick="showPage('admin-login')"><i class="bi bi-box-arrow-right"></i> Logout</button>
+        </div>
+      </div>
+      <div class="adm-page-content">
+
+        <!-- DASHBOARD -->
+        <div id="adm-section-dashboard" class="adm-section active">
+          <div class="stat-grid">
+            <div class="stat-card"><div class="stat-icon blue"><i class="bi bi-people-fill"></i></div><div><div class="stat-val">1,248</div><div class="stat-lbl">Total Registrations</div></div></div>
+            <div class="stat-card"><div class="stat-icon green"><i class="bi bi-check-circle-fill"></i></div><div><div class="stat-val">1,091</div><div class="stat-lbl">Approved</div></div></div>
+            <div class="stat-card"><div class="stat-icon amber"><i class="bi bi-hourglass-split"></i></div><div><div class="stat-val">87</div><div class="stat-lbl">Pending</div></div></div>
+            <div class="stat-card"><div class="stat-icon red"><i class="bi bi-eye-fill"></i></div><div><div class="stat-val">324</div><div class="stat-lbl">Live Viewers</div></div></div>
+            <div class="stat-card"><div class="stat-icon purple"><i class="bi bi-chat-square-text-fill"></i></div><div><div class="stat-val">512</div><div class="stat-lbl">Q&amp;A Submitted</div></div></div>
+            <div class="stat-card"><div class="stat-icon teal"><i class="bi bi-star-fill"></i></div><div><div class="stat-val">4.2/5</div><div class="stat-lbl">Avg Rating</div></div></div>
+          </div>
+          <div class="charts-row">
+            <div class="adm-card"><div class="adm-card-hdr"><h3>Registrations — Last 14 Days</h3></div><div class="chart-ph"><i class="bi bi-bar-chart-line"></i><span>Chart.js renders here</span></div></div>
+            <div class="adm-card"><div class="adm-card-hdr"><h3>Status Breakdown</h3></div><div class="chart-ph"><i class="bi bi-pie-chart"></i><span>Doughnut chart</span></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>Recent Registrations</h3><a href="#">View all →</a></div>
+            <table class="adm-table">
+              <thead><tr><th>ID</th><th>Doctor</th><th>Email</th><th>Event</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td style="font-family:monospace;color:#60a5fa">PW-082</td><td>Dr. Rajesh Mehta</td><td>rajesh.mehta@apollo.com</td><td>Oncology Summit</td><td><span class="badge-approved">Approved</span></td><td>03 Jul</td><td><button class="btn-sm-action">View</button></td></tr>
+                <tr><td style="font-family:monospace;color:#60a5fa">PW-081</td><td>Dr. Anitha Kumar</td><td>anitha.k@medplus.in</td><td>Oncology Summit</td><td><span class="badge-pending">Pending</span></td><td>03 Jul</td><td><button class="btn-sm-action" onclick="this.closest('tr').querySelector('td:nth-child(5) span').className='badge-approved';this.closest('tr').querySelector('td:nth-child(5) span').textContent='Approved';">Approve</button></td></tr>
+                <tr><td style="font-family:monospace;color:#60a5fa">PW-080</td><td>Dr. Suresh Patel</td><td>s.patel@fortis.com</td><td>Cardio Live</td><td><span class="badge-approved">Approved</span></td><td>02 Jul</td><td><button class="btn-sm-action">View</button></td></tr>
+                <tr><td style="font-family:monospace;color:#60a5fa">PW-079</td><td>Dr. Priya Nair</td><td>priya.n@narayana.com</td><td>Oncology Summit</td><td><span class="badge-rejected">Rejected</span></td><td>02 Jul</td><td><button class="btn-sm-action">View</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- QUESTIONS -->
+        <div id="adm-section-questions" class="adm-section">
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>Live Q&amp;A — Pending Moderation</h3><span style="font-size:.78rem;color:#64748b;">3 awaiting approval</span></div>
+            <table class="adm-table">
+              <thead><tr><th>Doctor</th><th>Question</th><th>Upvotes</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>Dr. Anitha K.</td><td>What is the recommended first-line therapy for NSCLC patients with EGFR mutation?</td><td>11</td><td><span class="badge-pending">Pending</span></td><td><button class="btn-sm-action" style="color:#10b981;border-color:#10b981;" onclick="approveQ(this)">✓ Approve</button> <button class="btn-sm-action" onclick="this.closest('tr').remove()">✕ Dismiss</button></td></tr>
+                <tr><td>Dr. Suresh P.</td><td>Can you elaborate on immunotherapy combinations in triple-negative breast cancer?</td><td>7</td><td><span class="badge-pending">Pending</span></td><td><button class="btn-sm-action" style="color:#10b981;border-color:#10b981;" onclick="approveQ(this)">✓ Approve</button> <button class="btn-sm-action" onclick="this.closest('tr').remove()">✕ Dismiss</button></td></tr>
+                <tr><td>Dr. Priya N.</td><td>What biomarkers should we test before starting CDK4/6 inhibitors?</td><td>4</td><td><span class="badge-pending">Pending</span></td><td><button class="btn-sm-action" style="color:#10b981;border-color:#10b981;" onclick="approveQ(this)">✓ Approve</button> <button class="btn-sm-action" onclick="this.closest('tr').remove()">✕ Dismiss</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- POLLS -->
+        <div id="adm-section-polls" class="adm-section">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;">
+            <div class="adm-card">
+              <div class="adm-card-hdr"><h3>Immunotherapy Poll</h3><span class="badge-live" id="poll-badge-1">Live</span></div>
+              <div style="padding:.75rem 1rem;">
+                <p style="font-size:.82rem;color:#cbd5e1;margin-bottom:.75rem;">Which immunotherapy agent do you most frequently use?</p>
+                <div class="poll-bar-row"><div class="poll-bar-label"><span>Pembrolizumab</span><span>52%</span></div><div class="poll-bar-track"><div class="poll-bar-fill" style="width:52%"></div></div></div>
+                <div class="poll-bar-row"><div class="poll-bar-label"><span>Atezolizumab</span><span>21%</span></div><div class="poll-bar-track"><div class="poll-bar-fill" style="width:21%"></div></div></div>
+                <div style="font-size:.75rem;color:#64748b;margin:.5rem 0 .75rem;">142 responses</div>
+                <button class="btn-sm-action" onclick="var b=document.getElementById('poll-badge-1');b.className='badge-pending';b.textContent='Closed';" style="width:100%;">Close Poll</button>
+              </div>
+            </div>
+            <div class="adm-card">
+              <div class="adm-card-hdr"><h3>Patient Preference Poll</h3><span class="badge-pending">Draft</span></div>
+              <div style="padding:.75rem 1rem;">
+                <p style="font-size:.82rem;color:#cbd5e1;margin-bottom:.75rem;">How often do patients ask about immunotherapy options?</p>
+                <p style="font-size:.75rem;color:#475569;margin-bottom:.75rem;">Not launched yet · 0 responses</p>
+                <button class="btn-sm-action" style="color:#10b981;border-color:#10b981;width:100%;" onclick="this.closest('.adm-card').querySelector('span').className='badge-live';this.closest('.adm-card').querySelector('span').textContent='Live';this.textContent='Close Poll';">▶ Launch Poll</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ATTENDANCE -->
+        <div id="adm-section-attendance" class="adm-section">
+          <div class="stat-grid" style="margin-bottom:1.25rem;">
+            <div class="stat-card"><div class="stat-icon green"><i class="bi bi-eye-fill"></i></div><div><div class="stat-val">324</div><div class="stat-lbl"><span class="live-dot"></span>Live Now</div></div></div>
+            <div class="stat-card"><div class="stat-icon blue"><i class="bi bi-person-check-fill"></i></div><div><div class="stat-val">891</div><div class="stat-lbl">Total Joins</div></div></div>
+            <div class="stat-card"><div class="stat-icon teal"><i class="bi bi-clock-fill"></i></div><div><div class="stat-val">47m</div><div class="stat-lbl">Avg Watch Time</div></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>Live Attendees</h3><span style="font-size:.75rem;color:#64748b;">Auto-refreshes every 15s</span></div>
+            <table class="adm-table">
+              <thead><tr><th>Doctor</th><th>Joined At</th><th>Watch Time</th><th>Last Ping</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Dr. Rajesh Mehta</td><td>2:02 PM</td><td>48:12</td><td>2s ago</td><td><span class="badge-live"><span class="live-dot"></span>Live</span></td></tr>
+                <tr><td>Dr. Anitha Kumar</td><td>2:00 PM</td><td>50:44</td><td>5s ago</td><td><span class="badge-live"><span class="live-dot"></span>Live</span></td></tr>
+                <tr><td>Dr. Suresh Patel</td><td>2:15 PM</td><td>35:10</td><td>8s ago</td><td><span class="badge-live"><span class="live-dot"></span>Live</span></td></tr>
+                <tr><td>Dr. Priya Nair</td><td>2:05 PM</td><td>2:11</td><td>6m ago</td><td><span class="badge-pending">Left</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- REPORTS -->
+        <div id="adm-section-reports" class="adm-section">
+          <div class="adm-card" style="margin-bottom:1rem;">
+            <div class="adm-card-hdr"><h3>Generate Report</h3></div>
+            <div style="padding:1rem;display:flex;gap:.75rem;flex-wrap:wrap;">
+              <select class="form-select" style="max-width:220px;background:#0f172a;border-color:#334155;color:#cbd5e1;border-radius:8px;">
+                <option>Registration Summary</option>
+                <option>Attendance Report</option>
+                <option>Feedback Analysis</option>
+                <option>CME Certificate List</option>
+                <option>Q&amp;A Export</option>
+              </select>
+              <button class="btn-dl" onclick="genReport()"><i class="bi bi-gear-fill"></i>Generate</button>
+            </div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>Generated Reports</h3></div>
+            <table class="adm-table">
+              <thead><tr><th>Report</th><th>Event</th><th>Generated</th><th>Status</th><th>Download</th></tr></thead>
+              <tbody id="reports-tbody">
+                <tr><td>Registration Summary</td><td>Oncology Summit 2024</td><td>03 Jul 10:30</td><td><span class="badge-approved">Ready</span></td><td><button class="btn-dl"><i class="bi bi-download"></i>CSV</button> <button class="btn-dl" style="background:#059669;"><i class="bi bi-filetype-pdf"></i>PDF</button></td></tr>
+                <tr><td>Attendance Report</td><td>Oncology Summit 2024</td><td>03 Jul 09:15</td><td><span class="badge-approved">Ready</span></td><td><button class="btn-dl"><i class="bi bi-download"></i>CSV</button></td></tr>
+                <tr><td>Feedback Analysis</td><td>Cardio Live Q1</td><td>28 Jun 14:00</td><td><span class="badge-approved">Ready</span></td><td><button class="btn-dl"><i class="bi bi-download"></i>CSV</button> <button class="btn-dl" style="background:#059669;"><i class="bi bi-filetype-pdf"></i>PDF</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FEEDBACK -->
+        <div id="adm-section-feedback" class="adm-section">
+          <div class="stat-grid" style="margin-bottom:1.25rem;">
+            <div class="stat-card"><div class="stat-icon teal"><i class="bi bi-star-fill"></i></div><div><div class="stat-val">4.2</div><div class="stat-lbl">Avg Rating</div></div></div>
+            <div class="stat-card"><div class="stat-icon blue"><i class="bi bi-people-fill"></i></div><div><div class="stat-val">312</div><div class="stat-lbl">Responses</div></div></div>
+            <div class="stat-card"><div class="stat-icon green"><i class="bi bi-hand-thumbs-up-fill"></i></div><div><div class="stat-val">87%</div><div class="stat-lbl">Recommend Rate</div></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>Feedback Entries</h3><button class="btn-dl"><i class="bi bi-download"></i>Export CSV</button></div>
+            <table class="adm-table">
+              <thead><tr><th>Doctor</th><th>Rating</th><th>NPS</th><th>Comment</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>Dr. Rajesh M.</td><td>⭐⭐⭐⭐ 4/5</td><td>9</td><td>"Excellent session, very relevant…"</td><td><button class="btn-sm-action">Flag</button></td></tr>
+                <tr><td>Dr. Anitha K.</td><td>⭐⭐⭐⭐⭐ 5/5</td><td>10</td><td>"Best CME webcast I've attended this year"</td><td><button class="btn-sm-action">Flag</button></td></tr>
+                <tr><td>Dr. Suresh P.</td><td>⭐⭐⭐ 3/5</td><td>7</td><td>"Good content, audio could be improved"</td><td><button class="btn-sm-action">Flag</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- EVENTS -->
+        <div id="adm-section-events" class="adm-section">
+          <div style="margin-bottom:1rem;display:flex;justify-content:flex-end;">
+            <button class="btn-dl" style="background:#059669;padding:.55rem 1rem;font-size:.83rem;border-radius:8px;"><i class="bi bi-plus-lg me-1"></i>New Event</button>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>All Events</h3></div>
+            <table class="adm-table">
+              <thead><tr><th>Title</th><th>Date</th><th>Registrations</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td>Oncology Advances Summit 2024</td><td>18 Jul 2024</td><td>1,248</td><td><span class="badge-live">Live</span></td><td><button class="btn-sm-action">Edit</button> <button class="btn-sm-action">View</button></td></tr>
+                <tr><td>Cardio Innovations Live</td><td>25 Jul 2024</td><td>342</td><td><span class="badge-approved">Published</span></td><td><button class="btn-sm-action">Edit</button> <button class="btn-sm-action">View</button></td></tr>
+                <tr><td>Neuro Live Q3 2024</td><td>05 Aug 2024</td><td>89</td><td><span class="badge-pending">Draft</span></td><td><button class="btn-sm-action">Edit</button> <button class="btn-sm-action">View</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ATTENDEES -->
+        <div id="adm-section-attendees" class="adm-section">
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>All Attendees</h3></div>
+            <table class="adm-table">
+              <thead><tr><th>ID</th><th>Doctor</th><th>Email</th><th>Specialty</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td style="font-family:monospace;color:#60a5fa;">PW-082</td><td>Dr. Rajesh Mehta</td><td>rajesh.mehta@apollo.com</td><td>Oncology</td><td><span class="badge-approved">Approved</span></td><td><button class="btn-sm-action">View</button></td></tr>
+                <tr><td style="font-family:monospace;color:#60a5fa;">PW-081</td><td>Dr. Anitha Kumar</td><td>anitha.k@medplus.in</td><td>Oncology</td><td><span class="badge-pending">Pending</span></td><td><button class="btn-sm-action" style="color:#10b981;border-color:#10b981;" onclick="approveQ(this)">✓ Approve</button></td></tr>
+                <tr><td style="font-family:monospace;color:#60a5fa;">PW-080</td><td>Dr. Suresh Patel</td><td>s.patel@fortis.com</td><td>Cardiology</td><td><span class="badge-approved">Approved</span></td><td><button class="btn-sm-action">View</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- REGISTRATIONS -->
+        <div id="adm-section-registrations" class="adm-section">
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>Registration Reports by Event</h3><button class="btn-dl"><i class="bi bi-download"></i>Export</button></div>
+            <table class="adm-table">
+              <thead><tr><th>Event</th><th>Total</th><th>Approved</th><th>Pending</th><th>Rejected</th></tr></thead>
+              <tbody>
+                <tr><td>Oncology Summit 2024</td><td>1,248</td><td style="color:#34d399;">1,091</td><td style="color:#fbbf24;">87</td><td style="color:#f87171;">70</td></tr>
+                <tr><td>Cardio Innovations</td><td>342</td><td style="color:#34d399;">298</td><td style="color:#fbbf24;">24</td><td style="color:#f87171;">20</td></tr>
+                <tr><td>Neuro Live Q3</td><td>89</td><td style="color:#34d399;">61</td><td style="color:#fbbf24;">28</td><td style="color:#f87171;">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- WEBCAST CONTROL -->
+        <div id="adm-section-webcast" class="adm-section">
+          <div class="stat-grid" style="margin-bottom:1.25rem;">
+            <div class="stat-card"><div class="stat-icon red"><i class="bi bi-broadcast-pin"></i></div><div><div class="stat-val" style="color:#f87171;">LIVE</div><div class="stat-lbl">Stream Status</div></div></div>
+            <div class="stat-card"><div class="stat-icon green"><i class="bi bi-eye-fill"></i></div><div><div class="stat-val">324</div><div class="stat-lbl">Live Viewers</div></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>Webcast Controls</h3></div>
+            <div style="padding:1rem;display:flex;gap:.75rem;flex-wrap:wrap;">
+              <button class="btn-dl" style="background:#059669;padding:.6rem 1.2rem;" onclick="alert('Webcast is already LIVE')"><i class="bi bi-broadcast"></i> Go Live</button>
+              <button class="btn-dl" style="background:#f59e0b;padding:.6rem 1.2rem;" onclick="alert('Stream paused')"><i class="bi bi-pause-fill"></i> Pause</button>
+              <button class="btn-dl" style="background:#ef4444;padding:.6rem 1.2rem;" onclick="alert('Webcast ended')"><i class="bi bi-stop-fill"></i> End Webcast</button>
+              <button class="btn-dl" style="background:#7c3aed;padding:.6rem 1.2rem;"><i class="bi bi-door-open"></i> Backstage</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="adm-section-settings" class="adm-section">
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>Platform Settings</h3></div>
+            <div style="padding:1rem;max-width:500px;">
+              <div class="adm-field" style="margin-bottom:1rem;">
+                <label style="font-size:.8rem;font-weight:600;color:#94a3b8;display:block;margin-bottom:.35rem;">Platform Name</label>
+                <input class="form-control" style="background:#0f172a;border-color:#334155;color:#e2e8f0;border-radius:8px;" value="PharmaWebcast">
+              </div>
+              <div class="adm-field" style="margin-bottom:1rem;">
+                <label style="font-size:.8rem;font-weight:600;color:#94a3b8;display:block;margin-bottom:.35rem;">Support Email</label>
+                <input class="form-control" style="background:#0f172a;border-color:#334155;color:#e2e8f0;border-radius:8px;" value="support@pharmawebcast.com">
+              </div>
+              <div class="adm-field" style="margin-bottom:1rem;">
+                <label style="font-size:.8rem;font-weight:600;color:#94a3b8;display:block;margin-bottom:.35rem;">Default Approval Mode</label>
+                <select class="form-select" style="background:#0f172a;border-color:#334155;color:#e2e8f0;border-radius:8px;"><option selected>Manual Approval</option><option>Auto-Approve All</option></select>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:.7rem .9rem;">
+                <span style="font-size:.85rem;color:#cbd5e1;">Maintenance Mode</span>
+                <div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" style="cursor:pointer;"></div>
+              </div>
+              <button class="btn-dl" style="padding:.6rem 1.5rem;font-size:.88rem;">Save Settings</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMAIL QUEUE -->
+        <div id="adm-section-emails" class="adm-section">
+          <div class="stat-grid" style="margin-bottom:1.25rem;">
+            <div class="stat-card"><div class="stat-icon amber"><i class="bi bi-envelope"></i></div><div><div class="stat-val">23</div><div class="stat-lbl">Pending</div></div></div>
+            <div class="stat-card"><div class="stat-icon green"><i class="bi bi-envelope-check"></i></div><div><div class="stat-val">4,821</div><div class="stat-lbl">Sent</div></div></div>
+            <div class="stat-card"><div class="stat-icon red"><i class="bi bi-envelope-x"></i></div><div><div class="stat-val">3</div><div class="stat-lbl">Failed</div></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-hdr"><h3>Email Queue</h3></div>
+            <table class="adm-table">
+              <thead><tr><th>#</th><th>Recipient</th><th>Subject</th><th>Status</th><th>Scheduled</th></tr></thead>
+              <tbody>
+                <tr><td style="color:#475569;">#4844</td><td>rajesh.mehta@apollo.com</td><td>Reminder: 1h until Oncology Summit</td><td><span class="badge-pending">Pending</span></td><td>18 Jul 1:00 PM</td></tr>
+                <tr><td style="color:#475569;">#4843</td><td>anitha.k@medplus.in</td><td>Registration Confirmed</td><td><span class="badge-approved">Sent</span></td><td>03 Jul 10:05</td></tr>
+                <tr><td style="color:#475569;">#4842</td><td>s.patel@fortis.com</td><td>Thank You for Attending</td><td><span class="badge-approved">Sent</span></td><td>03 Jul 06:30</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+    </div><!-- end old hidden content -->
+
+<!-- ═══════════ NAVIGATION BAR ═══════════ -->
+<div id="nav-bar">
+  <button class="active" onclick="showPage('register')" id="nav-register">📋 Registration</button>
+  <div class="sep"></div>
+  <button onclick="showPage('login')" id="nav-login">🔐 Attendee Login</button>
+  <div class="sep"></div>
+  <button onclick="showPage('webcast')" id="nav-webcast">📡 Webcast Room</button>
+  <div class="sep"></div>
+  <button onclick="showPage('admin-login')" id="nav-admin-login">🛡 Admin Login</button>
+  <div class="sep"></div>
+  <button onclick="showPage('admin-dashboard')" id="nav-admin-dashboard">⚙️ Admin Dashboard</button>
+</div>
+
+<script>
+const pages = ['register','login','webcast','admin-login','admin-dashboard'];
+
+function showPage(id) {
+  pages.forEach(p => {
+    document.getElementById('page-'+p).classList.remove('active');
+    const btn = document.getElementById('nav-'+p);
+    if (btn) btn.classList.remove('active');
+  });
+  document.getElementById('page-'+id).classList.add('active');
+  const btn = document.getElementById('nav-'+id);
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+  localStorage.setItem('pw_page', id);
+  if (id === 'webcast') renderPoll();
+}
+
+// Restore last visited page on load — poll rendered after all functions defined
+window.addEventListener('DOMContentLoaded', function(){
+  const saved = localStorage.getItem('pw_page');
+  if (saved && pages.includes(saved)) showPage(saved);
+  else renderPoll();
+});
+
+function toggleQuiz() {
+  const o = document.getElementById('quiz-overlay');
+  o.classList.toggle('show');
+}
+function toggleSurvey() {
+  const o = document.getElementById('survey-overlay');
+  o.classList.toggle('show');
+}
+
+function admSection(id, el) {
+  document.querySelectorAll('.adm-section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('adm-section-'+id);
+  if (sec) sec.classList.add('active');
+  document.querySelectorAll('.adm-subnav a').forEach(a => a.style.fontWeight = '600');
+  if (el) el.style.fontWeight = '900';
+}
+
+function clearFormError(id) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = '';
+}
+
+function showFormError(id, msg) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = msg;
+}
+
+function isValidEmail(v) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+}
+
+function isValidMobile(v) {
+  return /^[6-9]\d{9}$/.test(v.trim().replace(/\s+/g,''));
+}
+
+function getRegisteredUsers() {
+  try { return JSON.parse(localStorage.getItem('pw_registered_users') || '[]'); } catch(e) { return []; }
+}
+
+function saveRegisteredUser(name, mobile, email) {
+  var users = getRegisteredUsers();
+  // avoid duplicate email
+  if (!users.find(function(u){ return u.email.toLowerCase() === email.toLowerCase(); })) {
+    var now = new Date();
+    var ts = now.toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) + ', ' + now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+    users.push({ name: name, mobile: mobile, email: email.toLowerCase(), registeredAt: ts });
+    localStorage.setItem('pw_registered_users', JSON.stringify(users));
+  }
+}
+
+function handleRegister() {
+  var name   = document.getElementById('reg-name').value.trim();
+  var mobile = document.getElementById('reg-mobile').value.trim();
+  var email  = document.getElementById('reg-email').value.trim();
+  var btn    = document.getElementById('reg-btn');
+
+  if (!name) { showFormError('reg-error','Please enter your name.'); document.getElementById('reg-name').focus(); return; }
+  if (!mobile) { showFormError('reg-error','Please enter your mobile number.'); document.getElementById('reg-mobile').focus(); return; }
+  if (!isValidMobile(mobile.replace(/\D/g,''))) { showFormError('reg-error','Enter a valid 10-digit mobile number.'); document.getElementById('reg-mobile').focus(); return; }
+  if (!email) { showFormError('reg-error','Please enter your email address.'); document.getElementById('reg-email').focus(); return; }
+  if (!isValidEmail(email)) { showFormError('reg-error','Enter a valid email address.'); document.getElementById('reg-email').focus(); return; }
+
+  // Check duplicate registration
+  var existing = getRegisteredUsers().find(function(u){ return u.email.toLowerCase() === email.toLowerCase(); });
+  if (existing) { showFormError('reg-error','This email is already registered. Please login.'); return; }
+
+  btn.textContent = 'Registering…';
+  btn.disabled = true;
+  saveRegisteredUser(name, mobile, email);
+
+  // Send welcome email via PHP backend
+  fetch('/api/send-welcome.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name, email: email })
+  }).catch(function(){});
+
+  setTimeout(function() {
+    btn.textContent = 'REGISTER';
+    btn.disabled = false;
+    showPage('login');
+    document.getElementById('login-name').value = name;
+    document.getElementById('login-email').value = email;
+  }, 1200);
+}
+
+function handleLogout() {
+  localStorage.removeItem('pw_user_name');
+  localStorage.removeItem('pw_user_email');
+  localStorage.removeItem('pw_poll_user_vote');
+  localStorage.removeItem('pw_heartbeat');
+  showPage('login');
+}
+
+// Heartbeat — updates every 20s while user is on webcast page
+setInterval(function(){
+  var page = document.getElementById('page-webcast');
+  if (page && page.classList.contains('active') && localStorage.getItem('pw_user_email')) {
+    localStorage.setItem('pw_heartbeat', Date.now().toString());
+  }
+}, 20000);
+
+function handleLogin() {
+  var name  = document.getElementById('login-name').value.trim();
+  var email = document.getElementById('login-email').value.trim();
+  var btn   = document.getElementById('login-btn');
+
+  if (!name) { showFormError('login-error','Please enter your name.'); document.getElementById('login-name').focus(); return; }
+  if (!email) { showFormError('login-error','Please enter your email address.'); document.getElementById('login-email').focus(); return; }
+  if (!isValidEmail(email)) { showFormError('login-error','Enter a valid email address (e.g. you@example.com).'); document.getElementById('login-email').focus(); return; }
+
+  btn.textContent = 'Verifying…';
+  btn.disabled = true;
+  setTimeout(function() {
+    btn.textContent = 'LOGIN';
+    btn.disabled = false;
+
+    // Check against registered users
+    var users = getRegisteredUsers();
+    var match = users.find(function(u){
+      return u.email.toLowerCase() === email.toLowerCase() &&
+             u.name.toLowerCase() === name.toLowerCase();
+    });
+
+    if (!match) {
+      // Check if email exists but name doesn't match
+      var emailExists = users.find(function(u){ return u.email.toLowerCase() === email.toLowerCase(); });
+      if (emailExists) {
+        showFormError('login-error','Name does not match our records. Please check and try again.');
+      } else {
+        showFormError('login-error','Email not registered. Please register first.');
+      }
+      return;
+    }
+
+    localStorage.setItem('pw_user_name', match.name);
+    localStorage.setItem('pw_user_email', match.email);
+    localStorage.setItem('pw_heartbeat', Date.now().toString());
+    var nameEl = document.querySelector('.wc-user-name');
+    if (nameEl) nameEl.textContent = 'Hello ' + match.name + '!';
+    showPage('webcast');
+  }, 1000);
+}
+
+function getTimestamp() {
+  var now = new Date();
+  return now.toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) + ', ' +
+         now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}
+
+function toggleFeedbackModal() {
+  var modal = document.getElementById('feedback-modal');
+  var isOpen = modal.style.display === 'flex';
+  modal.style.display = isOpen ? 'none' : 'flex';
+  if (!isOpen) {
+    document.getElementById('feedback-text').value = '';
+    document.getElementById('feedback-error').textContent = '';
+    document.getElementById('feedback-submit-btn').textContent = 'Submit Feedback';
+    document.getElementById('feedback-submit-btn').disabled = false;
+  }
+}
+
+function submitFeedback() {
+  var text = document.getElementById('feedback-text').value.trim();
+  var errEl = document.getElementById('feedback-error');
+  if (!text) { errEl.textContent = 'Please write your feedback before submitting.'; return; }
+
+  var name  = localStorage.getItem('pw_user_name')  || 'Guest';
+  var email = localStorage.getItem('pw_user_email') || '';
+  var ts    = getTimestamp();
+
+  var feedback = [];
+  try { feedback = JSON.parse(localStorage.getItem('pw_feedback') || '[]'); } catch(e){}
+  feedback.unshift({ name: name, email: email, text: text, time: ts });
+  localStorage.setItem('pw_feedback', JSON.stringify(feedback));
+
+  var btn = document.getElementById('feedback-submit-btn');
+  btn.textContent = '✓ Feedback Submitted!';
+  btn.disabled = true;
+  btn.style.background = '#2d7a2d';
+  setTimeout(toggleFeedbackModal, 1200);
+}
+
+function sendQ() {
+  var inp = document.getElementById('qa-input');
+  var text = inp.value.trim();
+  if (!text) return;
+
+  var name  = localStorage.getItem('pw_user_name')  || 'Guest';
+  var email = localStorage.getItem('pw_user_email') || '';
+  var ts    = getTimestamp();
+
+  // Save to localStorage for admin panel
+  var qs = [];
+  try { qs = JSON.parse(localStorage.getItem('pw_questions') || '[]'); } catch(e){}
+  qs.unshift({ name: name, email: email, text: text, time: ts });
+  localStorage.setItem('pw_questions', JSON.stringify(qs));
+
+  // Show in UI
+  var list = document.getElementById('qa-list');
+  if (list) {
+    var div = document.createElement('div');
+    div.className = 'qa-msg';
+    div.innerHTML = '<div class="qa-name">' + name + ' <span style="color:#aaa;font-weight:400;font-size:.68rem;">' + ts + '</span></div>'
+                  + '<div class="qa-text">' + text.replace(/</g,'&lt;') + '</div>';
+    list.insertBefore(div, list.firstChild);
+  }
+  inp.value = '';
+}
+
+/* ── POLL ── */
+var POLL = {
+  question: 'How is your day going?',
+  options: ['Great', 'Ok Ok', 'Bad', 'Awesome']
+};
+
+function getPollData() {
+  try { return JSON.parse(localStorage.getItem('pw_poll_votes') || '{}'); } catch(e) { return {}; }
+}
+
+function renderPoll() {
+  var body = document.getElementById('poll-body');
+  if (!body) return;
+  var votes = getPollData();
+  var userVote = localStorage.getItem('pw_poll_user_vote');
+  var total = POLL.options.reduce(function(s,o){ return s + (votes[o]||0); }, 0);
+
+  var html = '<p class="poll-question-title">' + POLL.question + '</p>';
+
+  if (!userVote) {
+    // Show clickable options
+    POLL.options.forEach(function(opt) {
+      html += '<button class="poll-opt-btn" onclick="castVote(\'' + opt + '\')">' + opt + '</button>';
+    });
+  } else {
+    // Show result bars
+    POLL.options.forEach(function(opt) {
+      var count = votes[opt] || 0;
+      var pct = total > 0 ? Math.round(count / total * 100) : 0;
+      var isChosen = opt === userVote ? ' ✓' : '';
+      html += '<div class="poll-bar-row">'
+        + '<div class="poll-bar-label"><span>' + opt + isChosen + '</span><span>' + pct + '%</span></div>'
+        + '<div class="poll-bar-track"><div class="poll-bar-fill" style="width:' + pct + '%"></div></div>'
+        + '</div>';
+    });
+    html += '<p class="poll-total-note">' + total + ' vote' + (total !== 1 ? 's' : '') + ' total</p>';
+    html += '<p class="poll-voted-note">You voted: <strong>' + userVote + '</strong></p>';
+  }
+  body.innerHTML = html;
+}
+
+function castVote(option) {
+  var votes = getPollData();
+  votes[option] = (votes[option] || 0) + 1;
+  localStorage.setItem('pw_poll_votes', JSON.stringify(votes));
+  localStorage.setItem('pw_poll_user_vote', option);
+  renderPoll();
+}
+
+function submitPoll() {
+  renderPoll();
+}
+
+function startQuiz() {
+  document.getElementById('quiz-info-view').style.display = 'none';
+  document.getElementById('quiz-question-view').style.display = 'block';
+}
+
+function approveQ(btn) {
+  const span = btn.closest('tr').querySelector('span');
+  span.className = 'badge-approved';
+  span.textContent = 'Approved';
+  btn.remove();
+}
+
+function genReport() {
+  const tbody = document.getElementById('reports-tbody');
+  const row = document.createElement('tr');
+  row.innerHTML = `<td>Custom Report</td><td>Oncology Summit 2024</td><td>Just now</td><td><span class="badge-pending">Generating…</span></td><td>—</td>`;
+  tbody.insertBefore(row, tbody.firstChild);
+  setTimeout(() => {
+    row.querySelector('span').className = 'badge-approved';
+    row.querySelector('span').textContent = 'Ready';
+    row.querySelector('td:last-child').innerHTML = '<button class="btn-dl"><i class="bi bi-download"></i>CSV</button>';
+  }, 2000);
+}
+
+function rate(star, n) {
+  const stars = star.closest('.star-row').querySelectorAll('.star-btn');
+  stars.forEach((s,i) => s.classList.toggle('on', i < n));
+}
+function rate2(star, n) { rate(star, n); }
+</script>
+</body>
+</html>
